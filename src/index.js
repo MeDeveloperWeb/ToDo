@@ -1,22 +1,50 @@
 import htmlEl from "./utils/render";
-import { tasks, projects, checklist } from "./data/data";
+import header from "./ui/layout/header";
+import "./styles/styles.css"
+import sidebar from "./ui/layout/sidebar";
+import today from "./pages/today";
+import upcoming from "./pages/upcoming";
+import checklist from "./pages/checklist";
+import projects from "./pages/project";
+import setRoute, { getRoute } from "./routing/routes";
+const feather = require('feather-icons');
 
 function component () {
-    addProject("temp");
+    const mainContainer = htmlEl({
+        tag: "main",
+        children: [
+            today(),
+            upcoming(),
+            checklist(),
+            projects()
+        ]
+    });
+
     return htmlEl({
         tag: "div",
-        text: showProjects()
+        id: "content",
+        children: [
+            header(),
+            sidebar(),
+            mainContainer
+        ]
     });
 }
 
+function handleRoute() {
+    const section = getRoute() || "home";
+    setRoute(section);
+}
+
+function setTheme() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) 
+        document.querySelector(":root").classList.add("dark");
+}
+
 document.body.appendChild(component());
-console.log({tasks, projects, checklist});
 
+// Show SVGs
+feather.replace();
 
-function addProject(name, color) {
-    projects.add(name, color)
-}
-
-function showProjects() {
-    console.log(JSON.stringify(projects.list));
-}
+setTheme();
+handleRoute();

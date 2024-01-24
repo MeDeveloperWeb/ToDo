@@ -1,0 +1,22 @@
+:root {
+    --title-font-size: 1.5rem;
+    --padding-top-bottom: min(2vh, 1rem);
+    --padding-left-right:  min(2vw, 1rem);
+    --gap: 1rem;
+    --font-family: 'Courier New', Courier, monospace;
+    --header-color: var(--shadow-color)88;
+    --header-shadow-width: 5px;
+
+    /* Theme Dependent variables */
+
+    --color: black;
+    --background-color: white;
+    --shadow-color: #e0e0e0;
+    
+}
+
+:root.dark {
+    --color: white;
+    --background-color: black;
+    --shadow-color: #1f1f1f;
+}

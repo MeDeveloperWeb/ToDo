@@ -1,0 +1,130 @@
+@import url("reset.css");
+@import url("var.css");
+
+*{
+    box-sizing: border-box;
+}
+
+#content {
+    min-height: 100vh;
+    color: var(--color);
+    background-color: var(--background-color);
+    font-family: var(--font-family);
+
+    /* Layout */
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-between; */
+}
+
+.flip {
+    transform: rotate(180deg); 
+    
+    &:is(svg, i):hover{
+        transform: rotate(180deg) scale(120%); 
+    }
+}
+
+svg, i {
+    cursor: pointer;
+    
+    &:hover {
+        transform: scale(120%);
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    gap: var(--gap);
+    padding: var(--padding-top-bottom) var(--padding-left-right);
+    position: sticky;
+    top: 0;
+    box-shadow: var(--shadow-color) 0px 3.5px 4.5px 4.5px;
+
+    background-color: var(--header-color);
+    backdrop-filter: blur(10px);
+
+    margin-bottom: var(--padding-top-bottom);
+
+    z-index: 10;
+
+    & > .logo {
+        flex: 1;
+        font-size: var(--title-font-size);
+    }
+
+    & ul {
+        display: flex;
+        justify-content: space-evenly;
+        gap: calc(2 * var(--gap));
+    }
+}
+
+li, .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+}
+
+#sidebar-dialog {
+
+    /* font and background */
+    color: var(--color);
+    background-color: var(--shadow-color);
+    font-family: var(--font-family);
+
+    position: fixed;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    top: calc(2 * var(--padding-top-bottom) + var(--title-font-size) + var(--header-shadow-width));
+    border: none;
+    outline: none;
+    
+    /* transition */
+    animation: slide-out 0.5s ease-out;
+
+    &[open] {
+        animation: slide-in 0.5s ease-out;
+    }
+
+    & > nav {
+        width: 100%;
+    }
+
+    & ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    
+        & > li {
+            padding: calc(0.5 * var(--gap)) var(--padding-left-right);
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--background-color);
+            }
+        }
+    }
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slide-out {
+    0% {
+        transform: translateX(0%);
+        display: block;
+    }
+    100% {
+        transform: translateX(-100%);
+        display: none;
+    }
+}
