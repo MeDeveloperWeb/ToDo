@@ -7,11 +7,16 @@
     --header-color: var(--shadow-color)88;
     --header-shadow-width: 5px;
 
+    /* Form variables */
+    --text-input-width: 100%;
+    --text-input-height: 4rem;
+
     /* Theme Dependent variables */
 
     --color: black;
     --background-color: white;
     --shadow-color: #e0e0e0;
+    --color-scheme: light;
     
 }
 
@@ -19,4 +24,5 @@
     --color: white;
     --background-color: black;
     --shadow-color: #1f1f1f;
+    --color-scheme: dark;
 }

@@ -1,12 +1,24 @@
+import { defaultRoute } from "../data/constants";
+import { setProject } from "../pages/project-task";
+
+/**
+ * 
+ * @param {string} section 
+ */
 export default function setRoute (section) {
-    showSection(section);
     setHash(section);
+    handleRoute(section)
+}
+
+export function handleRoute (section) {
+    if (section.startsWith("project-")) handleProjectRoute(section);
+    else showSection(section);
 }
 
 function showSection (section) {
     hideAllSiblings (section);
-    const currSection = document.querySelector(`#${section}`);
-    if (currSection) currSection.style.display = "block";
+    const currSection = document.querySelector(`#${section}`) || document.querySelector(`#${defaultRoute}`);
+    currSection.style.display = "block";
 }
 
 function hideAllSiblings (section) {
@@ -21,6 +33,24 @@ function setHash (section) {
     window.location.hash = section;
 }
 
+function handleProjectRoute (section) {
+    try {
+        setProject(section.substring(8));
+        showSection("project-task");
+    } catch (error) {
+        setRoute(defaultRoute);
+        console.log(error);
+    }
+}
+
+export function setProjectRoute (pId) {
+    setRoute("project-" + pId);
+}
+
 export function getRoute () {
     return window.location.hash.substring(1);
 }
+
+window.addEventListener('hashchange', () => {
+    handleRoute(getRoute());
+})

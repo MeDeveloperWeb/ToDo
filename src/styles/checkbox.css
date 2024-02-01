@@ -1,0 +1,61 @@
+/*
+    Great help
+    https://moderncss.dev/pure-css-custom-checkbox-style/
+*/
+
+div.days-cont > input[type="checkbox"]{
+     /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: inherit;
+    
+    height: 2rem;
+    width: 2rem;
+    border: 1px solid currentColor;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    cursor: pointer;
+
+    &::before {
+        content: attr(day);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    &:checked {
+        background-color: limegreen;
+        color: white;
+    }
+}
+
+div.round > input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: inherit;
+
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 100px;
+    cursor: pointer;
+
+    &:checked {
+        background-color: limegreen;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+            content: '\2713';
+            font-size: 100%;
+            color: var(--color);
+        }
+    }
+}
+

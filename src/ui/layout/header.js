@@ -1,4 +1,5 @@
 import htmlEl from "../../utils/render";
+import icon from "./icon";
 import navEvents from "./navEvents";
 
 export default function header () {
@@ -40,19 +41,12 @@ function sidebar () {
 }
 
 function liEl (nav) {
-    const icon = htmlEl({
+    const iconLi = htmlEl({
         tag: "li",
-        children: [
-            htmlEl({
-                tag: "i",
-                props: {
-                    "data-feather": nav
-                }
-            })
-        ]
+        children: [icon(nav)]
     });
 
-    icon.addEventListener('click', navEvents[nav]);
+    iconLi.addEventListener('click', navEvents[nav]);
 
-    return icon;
+    return iconLi;
 }

@@ -1,17 +1,52 @@
+import { formatISO, isSameDay, isToday } from "date-fns";
+import isLocalStorageAvailable from "../utils/checkStorage";
 import { checklist, projects, tasks } from "./data";
+import { daysOfWeek } from "./constants";
 
 function setTaskAsCompleted (taskId) {
     const task = tasks.get(taskId);
-    checklist.add(task);
+
+    if (!task) throw new Error ("Invalid Task Id");
 
     // If one time task, delete from task list
-    if (task.date) tasks.remove(taskId);
+    if (task.date) {
+        tasks.remove(taskId);
+        updateData("tasks", tasks.list);
+        // Add to checklist
+        checklist.add(task);
+        updateData("checklist", checklist.list);
+        return task;
+    }
+    
+    const clonedTask = structuredClone(task);
+    // Add the date of task added to checklist to remove it later
+    clonedTask.date = formatISO(new Date(), { representation: 'date' });
+    checklist.add(clonedTask);
+    updateData("checklist", checklist.list);
+    return clonedTask;
+
 }
 
 function undoTaskCompletion (taskId) {
-    let task = checklist.remove(taskId);
+    const task = checklist.remove(taskId);
+
+    if (!task) throw new Error ("Invalid Task Id");
+
+    updateData("checklist", checklist.list);
     // If one time task, add it to task list
-    if (task.date) tasks.add(task);
+    if (!(task.repeat && task.repeat.length)) {
+        tasks.add(task);
+        updateData("tasks", tasks.list);
+        return task;
+    }
+    return tasks.get(taskId);
+}
+
+function isDeadlineToday(task) {
+    if (!task || typeof task !== 'object') throw new Error("Invalid Task");
+
+    const todayDay = daysOfWeek[(new Date()).getDay()]
+    return isToday(task.date) || (task.repeat && task.repeat.includes(todayDay));
 }
 
 function getProjectTasks (pId) {
@@ -19,12 +54,49 @@ function getProjectTasks (pId) {
 }
 
 function getTaskProject (taskId) {
-    return projects.get(tasks.get(taskId).projectId);
+    const task = tasks.get(taskId);
+    if (!task) throw new Error("Invalid Task ID");
+
+    return projects.get(task.projectId);
+}
+
+function getChecklistTaskProject (taskId) {
+    const task = checklist.get(taskId);
+    if (!task) throw new Error("Invalid Task ID");
+
+    return projects.get(task.projectId);
+}
+
+function updateData (key, value) {
+    if (!isLocalStorageAvailable) return;
+    
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function filterIncompleteTasks (list, date = new Date()) {
+    if (!Array.isArray(list)) throw new Error("Invalid Argument");
+    return list.filter(task => {
+        if (typeof task !== 'object') throw new Error("Invalid Argument");
+        return task.date || !(checklist.get(task.id) && isSameDay(checklist.get(task.id).date, date))
+    })
+}
+
+function deleteProject (pId) {
+    getProjectTasks(pId).forEach((task) => tasks.remove(task.id));
+    updateData("tasks", tasks.list);
+    const project = projects.remove(pId);
+    updateData("projects", projects.list);
+    return project;
 }
 
 export {
     setTaskAsCompleted,
     undoTaskCompletion,
     getProjectTasks,
-    getTaskProject
+    getTaskProject,
+    getChecklistTaskProject,
+    updateData,
+    filterIncompleteTasks,
+    isDeadlineToday,
+    deleteProject
 }

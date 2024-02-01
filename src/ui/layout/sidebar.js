@@ -1,5 +1,6 @@
 import setRoute from "../../routing/routes";
 import htmlEl from "../../utils/render";
+import icon from "./icon";
 
 const iconMapper =  {
     "today": "hash",
@@ -19,17 +20,10 @@ function liEl (nav) {
         text: capitalizeFirstLetter(nav)
     });
 
-    const icon = htmlEl({
-        tag: "i",
-        props: {
-            "data-feather": iconMapper[nav]
-        }
-    });
-
     const li = htmlEl({
         tag: "li",
         children: [
-            icon,
+            icon(iconMapper[nav]),
             text
         ]
     });
