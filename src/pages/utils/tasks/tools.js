@@ -45,6 +45,8 @@ export function deleteChecklistTask (taskEl) {
     const task = checklist.remove(taskEl.id);
     if (!task) throw new Error ("Invalid Id");
 
+    updateDatedView();
+
     updateData("checklist", checklist.list);
 
     removeWithAnimation(taskEl);
@@ -53,8 +55,10 @@ export function deleteChecklistTask (taskEl) {
 }
 
 export function toggleTaskCompletion (checkboxEl, taskEl) {
+    const date = taskEl.parentElement.dataset?.date || new Date();
+
     if (checkboxEl.checked) {
-        const task = setTaskAsCompleted(taskEl.id);
+        const task = setTaskAsCompleted(taskEl.id, date);
         removeWithAnimation(taskEl);
 
         appendToChecklist(taskElement(task, true));

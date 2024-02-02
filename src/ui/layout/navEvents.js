@@ -41,6 +41,8 @@ function sidebar (e) {
         if (dialog.open) dialog.close();
         else dialog.show();
     }
+    e.stopPropagation();
+    e.preventDefault();
 }
 
 export default {

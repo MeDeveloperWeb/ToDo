@@ -22,16 +22,13 @@ function liEl (nav) {
 
     const li = htmlEl({
         tag: "li",
+        props: {
+            "data-nav": nav
+        },
         children: [
             icon(iconMapper[nav]),
             text
         ]
-    });
-
-    li.addEventListener('click', (e) => {
-        setRoute(nav);
-        // Hide Sidebar
-        // e.target.closest("dialog").close();
     });
 
     return li;
@@ -52,11 +49,30 @@ export default function sidebar () {
             })
         ]
     });
-    return htmlEl({
+
+    const dialog = htmlEl({
         tag: "dialog",
         id: "sidebar-dialog",
         children: [
             nav
         ]
-    });;
+    });
+
+    document.addEventListener('click', ({target}) => {
+        if (!dialog.open) return;
+
+        if (!target.closest("dialog#sidebar-dialog")) {
+            dialog.close();
+            return;
+        }
+        if (target.closest("li")) {
+            setRoute(target.closest("li").dataset.nav);
+            // Hide Sidebar
+            dialog.close();
+            return
+        }
+        
+    });
+
+    return dialog;
 }

@@ -78,6 +78,7 @@ dialog, input {
 
     &::backdrop {
         background-color: var(--shadow-color);
+        backdrop-filter: blur(2px);
     }
 }
 
@@ -88,6 +89,7 @@ dialog, input {
     margin: 0;
     padding: 0;
     top: calc(2 * var(--padding-top-bottom) + var(--title-font-size) + var(--header-shadow-width));
+    left: 0;
     border: none;
     outline: none;
     
@@ -128,9 +130,10 @@ main {
     align-items: center;
     gap: var(--gap);
     width: 100%;
+    margin-bottom: var(--padding-top-bottom);
 }
 
-.page-container > .heading {
+.page-container .heading {
     font-size: 1.5rem;
     display: flex;
     gap: var(--gap);
@@ -146,6 +149,25 @@ main {
         &:hover {
             transform: scale(1);
         }
+    }
+}
+
+.upcoming-heading-cont {
+    display: flex;
+    justify-content: space-between;
+    width: min(1000px, 98%);
+    border-bottom: 4px solid var(--shadow-color);
+
+    & > .heading {
+        border: 0;
+    }
+
+    & > input[type="date"] {
+        font-size: 1rem;
+        color-scheme: var(--color-scheme);
+        padding: 0 var(--padding-left-right);
+        color: var(--color);
+        background-color: var(--background-color);
     }
 }
 

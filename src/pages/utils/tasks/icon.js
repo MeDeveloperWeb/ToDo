@@ -61,5 +61,5 @@ export function handleIcons (el) {
 
     // If checkbox 
     const checkbox = el.closest('input[type="checkbox"]')
-    if (el.closest('input[type="checkbox"]')) toggleTaskCompletion(checkbox, taskEl);
+    if (checkbox) toggleTaskCompletion(checkbox, taskEl);
 }

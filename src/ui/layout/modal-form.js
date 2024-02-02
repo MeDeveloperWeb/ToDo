@@ -12,7 +12,7 @@ export function editModalForm (formContents, submitFn) {
         props: {
             type: "submit"
         },
-        text: "Add",
+        text: "Save",
         classList: ["modal-form-submit"]
     });
 

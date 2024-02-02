@@ -1,9 +1,11 @@
-import { formatISO, isSameDay, isToday } from "date-fns";
+import { formatISO, isAfter, isBefore, isSameDay, isToday } from "date-fns";
 import isLocalStorageAvailable from "../utils/checkStorage";
 import { checklist, projects, tasks } from "./data";
 import { daysOfWeek } from "./constants";
+import { getRoute } from "../routing/routes";
+import { updateTodayView } from "../pages/today";
 
-function setTaskAsCompleted (taskId) {
+function setTaskAsCompleted (taskId, date = new Date()) {
     const task = tasks.get(taskId);
 
     if (!task) throw new Error ("Invalid Task Id");
@@ -17,12 +19,29 @@ function setTaskAsCompleted (taskId) {
         updateData("checklist", checklist.list);
         return task;
     }
-    
+
+    // else
+    const checkListTask = checklist.get(taskId);
+    // If task already in checklist
+    if (checkListTask) {
+        // Update the date of completion
+        checkListTask.date = date;
+        updateData("checklist", checklist.list);
+
+        if (getRoute() === "upcoming") updateTodayView();
+        
+        return task;
+    }
+    // else
+
     const clonedTask = structuredClone(task);
     // Add the date of task added to checklist to remove it later
-    clonedTask.date = formatISO(new Date(), { representation: 'date' });
+    clonedTask.date = formatISO(date, { representation: 'date' });
     checklist.add(clonedTask);
     updateData("checklist", checklist.list);
+
+    if (getRoute() === "upcoming") updateTodayView();
+
     return clonedTask;
 
 }
@@ -77,7 +96,7 @@ function filterIncompleteTasks (list, date = new Date()) {
     if (!Array.isArray(list)) throw new Error("Invalid Argument");
     return list.filter(task => {
         if (typeof task !== 'object') throw new Error("Invalid Argument");
-        return task.date || !(checklist.get(task.id) && isSameDay(checklist.get(task.id).date, date))
+        return task.date || !checklist.get(task.id) || !(isSameDay(checklist.get(task.id).date, date) || isAfter(checklist.get(task.id).date, date))
     })
 }
 
