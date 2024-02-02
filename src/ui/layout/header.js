@@ -23,7 +23,7 @@ function nav () {
         children: [htmlEl({
                     tag: "ul",
                     children: [
-                        liEl("search"),
+                        // liEl("search"),
                         liEl("plus"),
                         liEl("sun")
                     ]
