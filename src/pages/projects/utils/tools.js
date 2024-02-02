@@ -1,5 +1,4 @@
 import { projects } from "../../../data/data";
-import { updateData } from "../../../data/dataOp";
 import { editModalForm } from "../../../ui/layout/modal-form";
 import { replaceTodoItem } from "../../../ui/list/list";
 import projectFormContents from "./form";
@@ -7,6 +6,7 @@ import projectElement from "./project-el";
 import { setProjectRoute } from "../../../routing/routes";
 import taskFormContents, { updateTaskForm, updateTaskFormProjectList } from "../../utils/tasks/form";
 import { getAddTaskFn } from "../../utils/tasks/add-task";
+import updateData from "../../../data/update-data";
 
 export function addTask (projectEl) {
     updateTaskForm({projectId: projectEl.id});

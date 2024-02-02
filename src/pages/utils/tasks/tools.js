@@ -1,5 +1,5 @@
 import { checklist, tasks } from "../../../data/data";
-import { setTaskAsCompleted, undoTaskCompletion, updateData } from "../../../data/dataOp";
+import { setTaskAsCompleted, undoTaskCompletion} from "../../../data/dataOp";
 import { task } from "../../../data/dataStruct";
 import { setProjectRoute } from "../../../routing/routes";
 import { editModalForm } from "../../../ui/layout/modal-form";
@@ -10,6 +10,7 @@ import updateDatedView from "../update-dated-view";
 import { getValidatedData } from "./add-task";
 import taskFormContents, { updateTaskForm } from "./form";
 import taskElement from "./task-element";
+import updateData from "../../../data/update-data";
 
 export function taskProjectViewer (projectEl) {
     const pId = projectEl.id;

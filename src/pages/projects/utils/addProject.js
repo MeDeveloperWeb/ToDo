@@ -1,12 +1,12 @@
 import itemAdderBtn from "../../../ui/list/item-adder-btn";
 import { project as projectCreator } from "../../../data/dataStruct";
-import { updateData } from "../../../data/dataOp";
 import { projects } from "../../../data/data";
 import projectElement from "./project-el";
 import projectFormContents from "./form";
 import { updateTaskFormProjectList } from "../../utils/tasks/form";
 import { editModalForm } from "../../../ui/layout/modal-form";
 import { addWithAnimation } from "../../../ui/list/animation";
+import updateData from "../../../data/update-data";
 
 /**
  * @param {HTMLElement} container 

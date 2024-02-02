@@ -1,9 +1,9 @@
-import { formatISO, isAfter, isBefore, isSameDay, isToday } from "date-fns";
-import isLocalStorageAvailable from "../utils/checkStorage";
+import { formatISO, isAfter, isSameDay, isToday } from "date-fns";
 import { checklist, projects, tasks } from "./data";
 import { daysOfWeek } from "./constants";
 import { getRoute } from "../routing/routes";
 import { updateTodayView } from "../pages/today";
+import updateData from "./update-data";
 
 function setTaskAsCompleted (taskId, date = new Date()) {
     const task = tasks.get(taskId);
@@ -29,7 +29,7 @@ function setTaskAsCompleted (taskId, date = new Date()) {
         updateData("checklist", checklist.list);
 
         if (getRoute() === "upcoming") updateTodayView();
-        
+
         return task;
     }
     // else
@@ -86,12 +86,6 @@ function getChecklistTaskProject (taskId) {
     return projects.get(task.projectId);
 }
 
-function updateData (key, value) {
-    if (!isLocalStorageAvailable) return;
-    
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
 function filterIncompleteTasks (list, date = new Date()) {
     if (!Array.isArray(list)) throw new Error("Invalid Argument");
     return list.filter(task => {
@@ -114,7 +108,6 @@ export {
     getProjectTasks,
     getTaskProject,
     getChecklistTaskProject,
-    updateData,
     filterIncompleteTasks,
     isDeadlineToday,
     deleteProject

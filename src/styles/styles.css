@@ -130,7 +130,6 @@ main {
     align-items: center;
     gap: var(--gap);
     width: 100%;
-    margin-bottom: var(--padding-top-bottom);
 }
 
 .page-container .heading {

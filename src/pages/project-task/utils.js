@@ -1,5 +1,4 @@
-import { projects } from "../../data/data";
-import { deleteProject, updateData } from "../../data/dataOp";
+import { deleteProject } from "../../data/dataOp";
 import setRoute, { getRoute } from "../../routing/routes";
 
 export function getProjectId () {

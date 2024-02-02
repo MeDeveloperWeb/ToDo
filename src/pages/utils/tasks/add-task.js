@@ -1,11 +1,11 @@
 import { daysOfWeek } from "../../../data/constants";
 import { tasks } from "../../../data/data";
-import { updateData } from "../../../data/dataOp";
 import { task } from "../../../data/dataStruct";
 import { showValidationError } from "../../../utils/form";
 import itemAdderBtn from "../../../ui/list/item-adder-btn";
 import taskFormContents, { updateTaskForm } from "./form";
 import { editModalForm } from "../../../ui/layout/modal-form";
+import updateData from "../../../data/update-data";
 
 export function getValidatedData (formEl) {
     const formData = new FormData(formEl);
